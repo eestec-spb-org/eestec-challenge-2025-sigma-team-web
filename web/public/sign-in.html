@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content="IT Sigma">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>EESTech Challenge</title>
+    <link type="image/png" href="img/cropped-Logo-blue-1-192x192.png" rel="icon">
+    <!-- Подключение bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Выгрузка шрифта-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Подключение своих стилей -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/background.css" rel="stylesheet">
+    <link href="css/fonts.css" rel="stylesheet">
+    <!-- Границы объектов из bootstrap для отладки -->
+    <!-- <link href="css/debug.css" rel="stylesheet"> -->
+    <!-- Custom styles for this template -->
+    <link href="css/sign-in.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+  <canvas id="noiseCanvas"></canvas>
+  <div class="frosted-glass"></div>
+    
+<main class="form-signin">
+  <form>
+    <img class="mb-4" src="img/EC Logo.svg">
+    <h1 class="h3 mb-3 fw-normal">Вход</h1>
+
+    <div class="form-floating">
+      <input class="form-control" id="floatingInput" type="email" placeholder="name@example.com">
+      <label for="floatingInput">Email адрес</label>
+    </div>
+    <div class="form-floating mb-5">
+      <input class="form-control" id="floatingPassword" type="password" placeholder="Password">
+      <label for="floatingPassword">Пароль</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary background-gradient" type="submit">Вход</button>
+    <p class="mt-5 mb-3 text-muted">&copy; EESTEC Challenge LC Spb 2025</p>
+  </form>
+</main>
+
+
+  <script src="js/white-noise.js"></script>
+  </body>
+</html>
