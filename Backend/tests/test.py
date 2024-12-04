@@ -44,7 +44,7 @@ def test_get_user_by_email(setup_db):
     user_repository.create_user("user@example.com", hash_password("securepassword"))
     
     # Проверяем, что можем получить пользователя по имени
-    user = user_repository.get_user_by_email()
+    user = user_repository.get_user_by_email("user@example.com")
     assert user.email == 'user@example.com'
     assert verify_password('securepassword', user.hashed_password)
 
@@ -65,9 +65,9 @@ def test_get_all_users(setup_db):
 
     users = user_repository.get_all_users()
     assert len(users) == 2
-    assert users[0].email = 'user@example.com'
+    assert users[0].email == 'user@example.com'
     assert verify_password('securepassword', user[0].hashed_password)
-    assert users[1].email = 'next@example.com'
+    assert users[1].email == 'next@example.com'
     assert verify_password('othersecurepassword', user[1].hashed_password)
 
 
@@ -94,6 +94,11 @@ def test_delete_user(setup_db):
     user_repository.create_user("user@example.com", hash_password("securepassword"))
     user_repository.create_user("next@example.com", hash_password("othersecurepassword"))
     user_repository.delete_user(1)
+
+    with pytest.raises(UserRepositoryInterface.DoesNotExist):
+        user_repository.get_user_by_id(1)
+
+  
     users = user_repository.get_all_users()
     assert len(users) == 1
     assert users[0].email == "next@example.com"
