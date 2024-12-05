@@ -5,6 +5,7 @@ from repository.database import db
 from repository.migrations import UserModel
 from repository.user_repository import UserRepository
 from repository.utils import hash_password, verify_password
+from peewee import DoesNotExist
 
 @pytest.mark.parametrize("real_password, entered_password", [('securepassword', 'securepassword'),
                                                              ('securepassword', 'other_password'),
@@ -21,12 +22,12 @@ def test_hashing(real_password, entered_password):
 def setup_db():
     # Подключаемся к базе данных
     db.connect()
-    db.create_tables([User])  # Создаём таблицу User для каждого теста
+    db.create_tables([UserModel])  # Создаём таблицу User для каждого теста
   
     user_repository = UserRepository()
 
     yield user_repository
-    db.drop_tables([User])
+    db.drop_tables([UserModel])
     db.close()
   
 
@@ -66,9 +67,9 @@ def test_get_all_users(setup_db):
     users = user_repository.get_all_users()
     assert len(users) == 2
     assert users[0].email == 'user@example.com'
-    assert verify_password('securepassword', user[0].hashed_password)
+    assert verify_password('securepassword', users[0].hashed_password)
     assert users[1].email == 'next@example.com'
-    assert verify_password('othersecurepassword', user[1].hashed_password)
+    assert verify_password('othersecurepassword', users[1].hashed_password)
 
 
 def test_update_user(setup_db):
@@ -83,7 +84,7 @@ def test_update_user(setup_db):
     assert verify_password('securepassword', user1.hashed_password)
     assert user2.email == "user2@example.com"
     assert verify_password('otherpassword', user2.hashed_password)
-    user_repository.update_user(1, "other@other.com", "anotherpassword")
+    user_repository.update_user(1, "other@other.com", hash_password("anotherpassword"))
     user1 = user_repository.get_user_by_id(1)
     assert user1.email == "other@other.com"
     assert verify_password('anotherpassword', user1.hashed_password)
@@ -95,8 +96,7 @@ def test_delete_user(setup_db):
     user_repository.create_user("next@example.com", hash_password("othersecurepassword"))
     user_repository.delete_user(1)
 
-    with pytest.raises(UserRepositoryInterface.DoesNotExist):
-        user_repository.get_user_by_id(1)
+    assert user_repository.get_user_by_id(1)==None
 
   
     users = user_repository.get_all_users()
