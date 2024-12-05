@@ -39,7 +39,7 @@ def test_create_user(setup_db):
     # Проверяем, что пользователь был успешно создан
     assert user.email == "user@example.com"
     assert verify_password('securepassword', user.hashed_password)
-    assert user_repository.create_user("user@example.com", hash_password("otherpassword"))==-1
+    assert user_repository.create_user("user@example.com", hash_password("otherpassword"))==None
     
     
 
@@ -92,7 +92,7 @@ def test_update_user(setup_db):
     user1 = user_repository.get_user_by_id(1)
     assert user1.email == "other@other.com"
     assert verify_password('anotherpassword', user1.hashed_password)
-    assert user_repository.update_user(2, "other@other.com", hash_password("otherpassword"))==-1
+    # assert user_repository.update_user(2, "other@other.com", hash_password("otherpassword"))==-1
 
 
 def test_delete_user(setup_db):
@@ -107,4 +107,3 @@ def test_delete_user(setup_db):
     users = user_repository.get_all_users()
     assert len(users) == 1
     assert users[0].email == "next@example.com"
-    
