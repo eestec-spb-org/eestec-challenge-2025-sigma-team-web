@@ -21,7 +21,7 @@ class UserRepository(UserRepositoryInterface):
         except IntegrityError:
             # Логирование ошибки или обработка дубликата
             print(f"Пользователь с email '{email}' уже существует.")
-            return None
+            return -1
 
     def get_user_by_id(self, user_id: int) -> Optional[User]:
         try:
@@ -60,7 +60,7 @@ class UserRepository(UserRepositoryInterface):
             return None
         except IntegrityError:
             print(f"Не удалось обновить пользователя с ID '{user_id}'. Возможно, email '{email}' уже используется.")
-            return None
+            return -1
 
     def delete_user(self, user_id: int) -> bool:
         rows_deleted = UserModel.delete().where(UserModel.id == user_id).execute()

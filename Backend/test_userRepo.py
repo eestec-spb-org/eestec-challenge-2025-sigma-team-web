@@ -5,6 +5,7 @@ from repository.database import db
 from repository.migrations import UserModel
 from repository.user_repository import UserRepository
 from repository.utils import hash_password, verify_password
+from peewee import IntegrityError
 from peewee import DoesNotExist
 
 @pytest.mark.parametrize("real_password, entered_password", [('securepassword', 'securepassword'),
@@ -34,10 +35,13 @@ def setup_db():
 def test_create_user(setup_db):
     user_repository = setup_db
     user = user_repository.create_user("user@example.com", hash_password("securepassword"))
-    
+
     # Проверяем, что пользователь был успешно создан
     assert user.email == "user@example.com"
     assert verify_password('securepassword', user.hashed_password)
+    assert user_repository.create_user("user@example.com", hash_password("otherpassword"))==-1
+    
+    
 
 
 def test_get_user_by_email(setup_db):
@@ -88,6 +92,7 @@ def test_update_user(setup_db):
     user1 = user_repository.get_user_by_id(1)
     assert user1.email == "other@other.com"
     assert verify_password('anotherpassword', user1.hashed_password)
+    assert user_repository.update_user(2, "other@other.com", hash_password("otherpassword"))==-1
 
 
 def test_delete_user(setup_db):
