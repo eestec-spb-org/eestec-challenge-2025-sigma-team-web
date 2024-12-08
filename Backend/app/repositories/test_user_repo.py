@@ -1,9 +1,9 @@
 import pytest
 
-from repository.database import db
-from repository.migrations import UserModel
-from repository.user_repository import UserRepository
-from repository.utils import hash_password, verify_password
+from app.repositories.database import db
+from app.repositories.migrations import UserModel
+from app.repositories.user_repository import UserRepository
+from app.repositories.utils import hash_password, verify_password
 
 
 @pytest.mark.parametrize("real_password, entered_password", [('securepassword', 'securepassword'),

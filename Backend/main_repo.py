@@ -1,5 +1,5 @@
-from repository.user_repository import UserRepository
-from repository.utils import hash_password, verify_password
+from app.repositories.user_repository import UserRepository
+from app.repositories.utils import hash_password, verify_password
 
 
 def main():

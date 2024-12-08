@@ -1,23 +1,15 @@
+# app/domain/models.py
 from peewee import Model, CharField
 
-from repository.database import db
+from app.repositories.database import db
 
 
 class BaseModel(Model):
     class Meta:
         database = db
-        table_name = 'users'
+
 
 class UserModel(BaseModel):
+    username = CharField(unique=True)
     email = CharField(unique=True)
     hashed_password = CharField()
-
-        
-
-
-
-
-
-def migrate():
-    with db:
-        db.create_tables([UserModel])

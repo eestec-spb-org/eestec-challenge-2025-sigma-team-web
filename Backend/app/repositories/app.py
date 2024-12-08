@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, EmailStr
-from repository.user_repository import UserRepository
-from repository.utils import hash_password
+from app.repositories.user_repository import UserRepository
+from app.repositories.utils import hash_password
 
 app = FastAPI()
 
